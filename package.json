@@ -1,0 +1,21 @@
+{
+  "name": "nose",
+  "version": "1.0.0",
+  "description": "A game to pick noses",
+  "main": "index.js",
+  "scripts": {
+    "launch": "./node_modules/http-server/bin/http-server"
+  },
+  "keywords": [
+    "nose",
+    "picking"
+  ],
+  "author": "Mark Howard",
+  "license": "ISC",
+  "dependencies": {
+    "phaser": "^3.20.1"
+  },
+  "devDependencies": {
+    "http-server": "^0.11.1"
+  }
+}
