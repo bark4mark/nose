@@ -1,5 +1,6 @@
 const scaleRatio = window.devicePixelRatio / 3;
-let nose, finger, pointer, canPress = true;
+let nose, finger, touchPointer, pointer, canPress, speed;
+
 const center = (game) => {
     return {
         x: game.config.width / 2,
@@ -14,15 +15,20 @@ const preload = function () {
 
 const win = function () {
     nose.setVelocity(0,0);
+    speed += 200;
+    this.scene.restart('default');
 }
 
 const create = function () {
+    canPress = true;
+    speed = 400;
+    touchPointer = this.input.pointer1;
     pointer = this.input.activePointer;
     const centerPoint = center(game);
     nose = this.physics.add.image(centerPoint.x, centerPoint.y, 'nose');
     nose.setScale(scaleRatio, scaleRatio);
 
-    finger = this.physics.add.image(centerPoint.x, centerPoint.y + 400, 'finger');
+    finger = this.physics.add.image(centerPoint.x, centerPoint.y + speed, 'finger');
     finger.setScale(scaleRatio, scaleRatio);
 
     finger.setOrigin(0.5,0);
@@ -35,13 +41,15 @@ const create = function () {
 }
 
 const update = function () {
-    if(pointer.isDown && canPress) {
+    if(pointer.isDown && canPress || touchPointer.isDown && canPress) {
         finger.setVelocity(0,-1000);
         canPress=false;
     }
 
-    if(finger.y < 0)
-        console.log('dead');
+    if(finger.y < 0) {
+        speed = 400;
+        this.scene.restart('default');
+    }
 }
 
 const config = {
